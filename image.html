@@ -1,0 +1,103 @@
+<html>
+<head>
+    
+    <title>Kids Shopping Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: peachpuff;
+        }
+        h1 {
+            color: blue;
+        }
+        .item {
+            background-color: red;
+            border: 2px solid #333;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+        }
+        .cart {
+            margin-top: 20px;
+            padding: 10px;
+            background-color:white;
+            display: inline-block;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Kids Shop!</h1>
+    <p>Click the button to add an item to the cart.</p>
+
+<div class="cart">
+        <h3>Shopping Cart</h3>
+        <p id="cartList">Cart is empty</p>
+    </div>
+
+    <div class="item">
+        <p>img src="https://th.bing.com/th/id/OIP.NgyNaeC0IPslfjGIOtgAygHaF6?rs=1&pid=ImgDetMain""height=100""width=100"Gaming laptop - ₹100,000</p>
+        <button onclick="addToCart('Gaming laptop')">Add to Cart</button>
+    </div>
+
+    <div class="item">
+        <p>img src="https://th.bing.com/th/id/OIP.1T1w9WDuowagD2HY0zjF2AHaGl?rs=1&pid=ImgDetMain""height=100""width=100"=Basketball - ₹1000</p>
+        <button onclick="addToCart('Basketball')">Add to Cart</button>
+    </div>
+
+    <div class="item">
+        <p>img src="https://images.wallpapersden.com/image/download/bumblebee-2018-movie_a2hpa2qUmZqaraWkpJRrbmZlrWhtbWw.jpg""heigth=100""width=100"Bumblebee robot - ₹10099</p>
+        <button onclick="addToCart('Bumblebee robot')">Add to Cart</button>
+    </div>
+
+    
+<div class="item">
+        <p>img src="https://th.bing.com/th/id/OIP.M8WygP5O_yayUNIDSH-OUwHaHa?rs=1&pid=ImgDetMain""heigth=100""width=100"Smart Watch- ₹6000</p>
+        <button onclick="addToCart('Smart watch')">Add to Cart</button>
+    </div>
+
+<div class="item">
+        <p>img src="https://th.bing.com/th/id/OIP.2Ns8cxtrhQDFZ7dl3r668QHaHY?rs=1&pid=ImgDetMain"heigth=100""width=100"Wireless Controller - ₹5000</p>
+        <button onclick="addToCart('Wireless Controller')">Add to Cart</button>
+    </div>
+
+<div class="item">
+        <p>img src="https://m.media-amazon.com/images/I/51A7E9DpnYS._AC_SL1500_.jpg""heigth=100""width=100"Toy Katana - ₹1000</p>
+        <button onclick="addToCart('Toy Katana')">Add to Cart</button>
+    </div>
+
+<div class="item">
+        <p> img src="https://images-na.ssl-images-amazon.com/images/I/61WLo4nhX4L.jpg""heigth=100""width=100" Archery set- ₹899</p>
+        <button onclick="addToCart('Archery set')">Add to Cart</button>
+    </div>
+
+<div class="item">
+        <pimg src="https://nwscdn.com/media/catalog/product/w/o/wooden-garden-cricket-set---pack-shot.jpg""heigth=100""width=100"Cricket set - ₹16000</p>
+        <button onclick="addToCart('Cricket set')">Add to Cart</button>
+    </div>
+
+<div class="item">
+        <p>img src="https://th.bing.com/th/id/OIP.dsMv_m2_UBzke9_FsKdRhgHaDt?rs=1&pid=ImgDetMain""heigth=100""width=100"Football - ₹500</p>
+        <button onclick="addToCart('Football')">Add to Cart</button>
+    </div>
+
+<div class="item">
+        <p>img src="https://m.media-amazon.com/images/I/71CypaNWz5L.jpg""heigth=100""width=100"Dart game- ₹1000</p>
+        <button onclick="addToCart('Dart game')">Add to Cart</button>
+ 
+
+          <script>
+        function addToCart(item) {
+            let cart = document.getElementById("cartList");
+            if (cart.innerHTML === "Cart is empty") {
+                cart.innerHTML = item;
+            } else {
+                cart.innerHTML += ", " + item;
+            }
+        }
+    </script>
+
+</body>
+</html>
