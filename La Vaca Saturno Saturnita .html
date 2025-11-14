@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Number Guessing Game</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+padding: 20px;
+max-width: 350px;
+margin: auto;
+background: #f5f5f5;
+}
+h2 {
+text-align: center;
+margin-bottom: 20px;
+}
+label {
+font-size: 16px;
+display: block;
+margin-bottom: 8px;
+}
+input[type=number] {
+width: 100%;
+padding: 8px;
+font-size: 16px;
+margin-bottom: 12px;
+}
+button {
+width: 100%;
+padding: 10px;
+font-size: 16px;
+cursor: pointer;
+}
+#message {
+margin-top: 20px;
+font-size: 18px;
+text-align: center;
+min-height: 24px;
+}
+</style>
+</head>
+<body>
+<h2>Number Guessing Game</h2>
+<label for="guess">Enter your guess (1–100):</label>
+
+<input type="number" id="guess" min="1" max="100" />
+<button onclick="checkGuess()">Check</button>
+<div id="message"></div>
+<button onclick="resetGame()" style="margin-top:15px;">Play Again</button>
+<script>
+let secretNumber = Math.floor(Math.random() * 100) + 1;
+const message = document.getElementById('message');
+const guessInput = document.getElementById('guess');
+function checkGuess() {
+const guess = Number(guessInput.value);
+if (!guess || guess < 1 || guess > 100) {
+message.textContent = "Please enter a valid number between 1 and 100.";
+return;
+}
+if (guess === secretNumber) {
+message.textContent = "Correct! Well done!";
+} else if (guess > secretNumber) {
+message.textContent = "Too high. Try a smaller number.";
+} else {
+message.textContent = "Too low. Try a bigger number.";
+}
+}
+function resetGame() {
+secretNumber = Math.floor(Math.random() * 100) + 1;
+message.textContent = "";
+guessInput.value = "";
+}
+</script>
+</body>
+</html>
