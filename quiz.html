@@ -1,15 +1,78 @@
+<!DOCTYPE html>
 <html>
-<head>
-<title><<sports quiz></title>
-</head>
-</body>
-<h1>sports quiz</h1>
-<p><strong>question 1:</strong>who was the captain in</p>
-<input type= "radio" name ="q1"value = <"">  <Br>
-<input type ="radio" name ="q1"value = <"">  <Br>
-<input type ="radio" name ="q1"value =<"">  <Br> 
-<p><strong>question2:</strong>which planet is closest to sun</p>
-<input type ="radio" name ="q2"value =<"Mars"> Mars <Br>
-<input type ="radio" name ="q2"value =<"Saturn"> Saturn <Br>
-<input type ="radio" name ="q2"value =<"Mercury"> Mercury <Br>
-<button type ="submit"> submit</button
+  <head>
+    <title>Quiz App</title>
+  </head>
+  <body>
+    <h1>Simple Quiz</h1>
+    <p id="question"></p>
+    <div id="options"></div>
+    <p id="result"></p>
+
+    <script>
+      const quiz = [
+        {
+          question: "What is the capital of France?",
+          options: ["Paris", "London", "Berlin"],
+          answer: "Paris"
+        },
+        {
+          question: "Which planet is known as the Red Planet?",
+          options: ["Earth", "Mars", "Jupiter"],
+          answer: "Mars"
+        },
+        {
+          question: "Who wrote 'Hamlet'?",
+          options: ["Charles Dickens", "William Shakespeare", "Jane Austen"],
+          answer: "William Shakespeare"
+        }
+      ];
+
+      let currentQuestion = 0;
+
+      function loadQuestion() {
+        const q = quiz[currentQuestion];
+        document.getElementById("question").innerText = q.question;
+
+        const optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = ""; // Clear previous buttons
+
+        q.options.forEach(option => {
+          const button = document.createElement("button");
+          button.innerText = option;
+          button.onclick = function () {
+            checkAnswer(option);
+          };
+          optionsDiv.appendChild(button);
+        });
+
+        document.getElementById("result").innerText = "";
+      }
+
+      function checkAnswer(selected) {
+        const correct = quiz[currentQuestion].answer;
+        const result = document.getElementById("result");
+
+        if (selected === correct) {
+          result.innerText = "Correct!";
+        } else {
+          result.innerText = "Wrong answer!";
+        }
+
+        currentQuestion++;
+        if (currentQuestion < quiz.length) {
+          setTimeout(loadQuestion, 1000); // Load next question after 1 second
+        } else {
+          setTimeout(() => {
+            document.getElementById("question").innerText = "Quiz Completed!";
+            document.getElementById("options").innerHTML = "";
+            result.innerText = "";
+          }, 1000);
+        }
+      }
+
+      // Start the quiz
+      loadQuestion();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Two-Round Quiz</title>
+</head>
+<body>
+  <h1>Two-Round Quiz</h1>
+
+  <!-- Round 1 -->
+  <div id="round1">
+    <h2>Round 1: Easy Questions</h2>
+    <p id="question1"></p>
+    <div id="options1"></div>
+    <p id="result1"></p>
+  </div>
+
+  <!-- Round 2 -->
+  <div id="round2" style="display:none;">
+    <h2>Round 2: Visual Round</h2>
+    <img id="quizImage" src="" alt="Quiz Image" width="300"><br><br>
+    <div id="options2"></div>
+    <p id="result2"></p>
+  </div>
+
+  <script>
+    // Round 1 Questions
+    const round1 = [
+      { question: "What is 2 + 2?", options: ["3", "4", "5"], answer: "4" },
+      { question: "What color is the sky?", options: ["Blue", "Green", "Red"], answer: "Blue" }
+    ];
+
+    // Round 2 Questions (with image URLs)
+    const round2 = [
+      {
+        image: "https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg",
+        options: ["Apple", "Banana", "Orange"],
+        answer: "Apple"
+      },
+      {
+        image: "https://upload.wikimedia.org/wikipedia/commons/d/da/Taj-Mahal.jpg",
+        options: ["Eiffel Tower", "Taj Mahal", "Colosseum"],
+        answer: "Taj Mahal"
+      }
+    ];
+
+    let qIndex1 = 0;
+    let qIndex2 = 0;
+
+    function loadRound1() {
+      const q = round1[qIndex1];
+      document.getElementById("question1").innerText = q.question;
+      const optionsDiv = document.getElementById("options1");
+      optionsDiv.innerHTML = "";
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => {
+          document.getElementById("result1").innerText = opt === q.answer ? "Correct!" : "Wrong!";
+          qIndex1++;
+          if (qIndex1 < round1.length) {
+            setTimeout(loadRound1, 1000);
+          } else {
+            setTimeout(() => {
+              document.getElementById("round1").style.display = "none";
+              loadRound2();
+            }, 1000);
+          }
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function loadRound2() {
+      document.getElementById("round2").style.display = "block";
+      const q = round2[qIndex2];
+      document.getElementById("quizImage").src = q.image;
+      const optionsDiv = document.getElementById("options2");
+      optionsDiv.innerHTML = "";
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => {
+          document.getElementById("result2").innerText = opt === q.answer ? "Correct!" : "Wrong!";
+          qIndex2++;
+          if (qIndex2 < round2.length) {
+            setTimeout(loadRound2, 1000);
+          } else {
+            setTimeout(() => {
+              document.getElementById("round2").innerHTML = "<h2>Quiz Completed!</h2>";
+            }, 1000);
+          }
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    // Start Round 1
+    loadRound1();
+  </script>
+</body>
+</html>
+
