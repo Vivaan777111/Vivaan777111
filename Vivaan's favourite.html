@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sports Cart</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --muted: #6b7280;
+      --text: #e5e7eb;
+      --accent: #22c55e;
+      --accent-2: #38bdf8;
+      --danger: #ef4444;
+      --border: #1f2937;
+      --shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 500px at 20% -20%, #0b1221 0%, var(--bg) 60%), var(--bg);
+      color: var(--text);
+    }
+
+    /* Layout */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; letter-spacing: 0.3px;
+    }
+    .brand .logo {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid; place-items: center; color: #0b1221;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-actions .pill {
+      padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s;
+    }
+    .nav-actions .pill:hover { color: var(--text); border-color: #2a3649; }
+
+    main {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 18px 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+    }
+    @media (max-width: 880px) {
+      main { grid-template-columns: 1fr; }
+    }
+
+    /* Cart list */
+    .card {
+      background: linear-gradient(180deg, #0d1322 0%, #0a101c 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 18px 14px; border-bottom: 1px solid var(--border);
+    }
+    .card-header h2 { margin: 0; font-size: 20px; }
+    .cart-items { display: grid; gap: 12px; padding: 16px; }
+
+    .item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 14px;
+      padding: 12px;
+      border: 1px solid #192233;
+      border-radius: 14px;
+      background: #0b1322;
+    }
+    @media (max-width: 560px) {
+      .item { grid-template-columns: 70px 1fr; }
+      .item .right { grid-column: 1 / -1; margin-top: 8px; }
+    }
+
+    .thumb {
+      width: 100%; height: 80px; border-radius: 10px;
+      background: #0a192f; border: 1px solid #1a2940; overflow: hidden;
+      display: grid; place-items: center; color: #93c5fd; font-size: 12px;
+    }
+
+    .meta { display: grid; gap: 6px; }
+    .title { font-weight: 600; }
+    .sub { color: var(--muted); font-size: 13px; }
+
+    .controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .qty {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid #1f2a3d;
+      border-radius: 999px; padding: 6px 10px;
+      background: #0a1629;
+    }
+    .qty button {
+      width: 24px; height: 24px; border: none; border-radius: 6px;
+      background: #0e1c33; color: #cbd5e1; cursor: pointer; transition: 0.2s;
+    }
+    .qty button:hover { background: #152644; }
+    .qty input {
+      width: 36px; background: transparent; border: none; text-align: center;
+      color: var(--text); font-weight: 600;
+    }
+
+    .remove {
+      margin-left: 4px;
+      color: #94a3b8; background: transparent; border: none; cursor: pointer;
+      padding: 6px 10px; border-radius: 8px; transition: 0.2s;
+    }
+    .remove:hover { color: #cbd5e1; background: #121a2a; }
+
+    .price {
+      text-align: right;
+      display: grid; gap: 6px; align-content: center;
+    }
+    .price .unit { color: #9ca3af; font-size: 13px; }
+    .price .line { font-weight: 700; }
+
+    /* Summary */
+    .summary { padding: 16px; }
+    .row { display: flex; align-items: center; justify-content: space-between; margin: 8px 0; }
+    .row .label { color: var(--muted); }
+    .total { font-size: 20px; font-weight: 800; }
+
+    .promo {
+      margin-top: 10px; display: flex; gap: 8px;
+    }
+    .promo input {
+      flex: 1; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid #1f2a3d; background: #0a1629; color: var(--text);
+    }
+    .btn {
+      padding: 10px 12px; border-radius: 10px; border: 1px solid #1f2a3d;
+      background: #0e1c33; color: #cbd5e1; cursor: pointer; transition: 0.2s;
+    }
+    .btn:hover { background: #13223e; }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: none; color: #081220; font-weight: 800;
+    }
+
+    .footnote { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: #0a192f; border: 1px solid #1f2a3d; color: var(--text);
+      padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow);
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .toast.show { opacity: 1; pointer-events: auto; }
+    .empty {
+      padding: 24px; text-align: center; color: var(--muted);
+      border: 1px dashed #23314a; border-radius: 12px; background: #0b1426;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>Stride Sports</div>
+      </div>
+      <div class="nav-actions">
+        <div class="pill">Shop</div>
+        <div class="pill">Cart</div>
+        <div class="pill">Profile</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Cart list -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Your cart</h2>
+        <div class="sub">Free shipping above ₹999</div>
+      </div>
+      <div id="cart" class="cart-items">
+        <!-- Items will be rendered here -->
+      </div>
+    </section>
+
+    <!-- Order summary -->
+    <aside class="card">
+      <div class="card-header">
+        <h2>Order summary</h2>
+        <div class="sub">Secure checkout</div>
+      </div>
+      <div class="summary">
+        <div class="row">
+          <div class="label">Subtotal</div>
+          <div id="subtotal">₹0</div>
+        </div>
+        <div class="row">
+          <div class="label">Discount</div>
+          <div id="discount">- ₹0</div>
+        </div>
+        <div class="row">
+          <div class="label">Shipping</div>
+          <div id="shipping">₹0</div>
+        </div>
+        <div class="row" style="margin-top:12px;">
+          <div class="label total">Total</div>
+          <div class="total" id="total">₹0</div>
+        </div>
+
+        <div class="promo">
+          <input id="promo" type="text" placeholder="Enter promo code (PLAY10)" />
+          <button class="btn" id="applyPromo">Apply</button>
+        </div>
+
+        <button class="btn primary" style="width:100%; margin-top:12px;" id="checkout">
+          Checkout securely
+        </button>
+        <div class="footnote">By placing your order, you agree to our terms and return policy.</div>
+      </div>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast">Updated cart</div>
+
+  <script>
+    // Sample sports products
+    const products = [
+      { id: 1, name: "Pro Football", variant: "Size 5 | Outdoor", price: 799, img: "FB", qty: 1 },
+      { id: 2, name: "Running Shoes", variant: "Men | Blue", price: 2499, img: "RS", qty: 1 },
+      { id: 3, name: "Cricket Bat", variant: "English Willow", price: 3499, img: "CB", qty: 1 },
+      { id: 4, name: "Yoga Mat", variant: "6mm | Non-slip", price: 999, img: "YM", qty: 2 }
+    ];
+
+    const SHIPPING_THRESHOLD = 999;
+    const SHIPPING_FEE = 69;
+
+    const state = {
+      items: [...products],
+      promo: null,
+      discountRate: 0, // e.g., 10% for PLAY10
+    };
+
+    const rupee = (n) => "₹" + n.toLocaleString("en-IN");
+
+    // Render cart items
+    const cartEl = document.getElementById("cart");
+    function renderCart() {
+      cartEl.innerHTML = "";
+
+      if (state.items.length === 0) {
+        cartEl.innerHTML = `
+          <div class="empty">
+            Your cart is empty. Explore gear and get moving!
+          </div>`;
+        updateSummary();
+        return;
+      }
+
+      state.items.forEach(item => {
+        const lineTotal = item.price * item.qty;
+        const row = document.createElement("div");
+        row.className = "item";
+        row.innerHTML = `
+          <div class="thumb">${item.img}</div>
+          <div class="meta">
+            <div class="title">${item.name}</div>
+            <div class="sub">${item.variant}</div>
+            <div class="controls">
+              <div class="qty">
+                <button aria-label="Decrease quantity" data-action="dec" data-id="${item.id}">-</button>
+                <input aria-label="Quantity" type="number" min="1" value="${item.qty}" data-id="${item.id}" />
+                <button aria-label="Increase quantity" data-action="inc" data-id="${item.id}">+</button>
+              </div>
+              <button class="remove" data-action="remove" data-id="${item.id}">Remove</button>
+            </div>
+          </div>
+          <div class="right price">
+            <div class="unit">Unit: ${rupee(item.price)}</div>
+            <div class="line">${rupee(lineTotal)}</div>
+          </div>
+        `;
+        cartEl.appendChild(row);
+      });
+
+      updateSummary();
+    }
+
+    // Update summary totals
+    function updateSummary() {
+      const subtotalVal = state.items.reduce((sum, it) => sum + it.price * it.qty, 0);
+      const discountVal = Math.round(subtotalVal * state.discountRate);
+      const netAfterDiscount = Math.max(subtotalVal - discountVal, 0);
+
+      const shippingVal = netAfterDiscount >= SHIPPING_THRESHOLD || netAfterDiscount === 0
+        ? 0
+        : SHIPPING_FEE;
+
+      const totalVal = netAfterDiscount + shippingVal;
+
+      document.getElementById("subtotal").textContent = rupee(subtotalVal);
+      document.getElementById("discount").textContent = "- " + rupee(discountVal);
+      document.getElementById("shipping").textContent = rupee(shippingVal);
+      document.getElementById("total").textContent = rupee(totalVal);
+    }
+
+    // Toast feedback
+    const toastEl = document.getElementById("toast");
+    let toastTimer = null;
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1300);
+    }
+
+    // Quantity and remove handlers (event delegation)
+    cartEl.addEventListener("click", (e) => {
+      const target = e.target;
+      const id = Number(target.getAttribute("data-id"));
+      const action = target.getAttribute("data-action");
+      if (!id || !action) return;
+
+      const item = state.items.find(i => i.id === id);
+      if (!item) return;
+
+      if (action === "inc") {
+        item.qty += 1;
+        renderCart();
+        toast("Quantity increased");
+      }
+      if (action === "dec") {
+        item.qty = Math.max(1, item.qty - 1);
+        renderCart();
+        toast("Quantity decreased");
+      }
+      if (action === "remove") {
+        state.items = state.items.filter(i => i.id !== id);
+        renderCart();
+        toast("Item removed");
+      }
+    });
+
+    // Handle direct qty input changes
+    cartEl.addEventListener("input", (e) => {
+      const target = e.target;
+      if (target.type !== "number") return;
+      const id = Number(target.getAttribute("data-id"));
+      const val = Math.max(1, parseInt(target.value || "1", 10));
+      target.value = val;
+      const item = state.items.find(i => i.id === id);
+      if (item) {
+        item.qty = val;
+        updateSummary();
+      }
+    });
+
+    // Promo code
+    document.getElementById("applyPromo").addEventListener("click", () => {
+      const code = (document.getElementById("promo").value || "").trim().toUpperCase();
+      if (code === "PLAY10") {
+        state.promo = code;
+        state.discountRate = 0.10;
+        updateSummary();
+        toast("Promo applied: 10% off");
+      } else if (!code) {
+        state.promo = null;
+        state.discountRate = 0;
+        updateSummary();
+        toast("No promo entered");
+      } else {
+        state.promo = null;
+        state.discountRate = 0;
+        updateSummary();
+        toast("Invalid promo");
+      }
+    });
+
+    // Checkout
+    document.getElementById("checkout").addEventListener("click", () => {
+      if (state.items.length === 0) {
+        toast("Your cart is empty");
+        return;
+      }
+      toast("Redirecting to checkout...");
+      // Placeholder: simulate navigation
+      setTimeout(() => alert("Proceeding to payment gateway..."), 500);
+    });
+
+    // Initial render
+    renderCart();
+  </script>
+</body>
+</html>
