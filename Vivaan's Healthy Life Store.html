@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vivaan's Healthy Life Medical Store</title>
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --muted: #5f6b7a;
+      --accent: #2f7ef7;
+      --accent-dark: #1f5fd1;
+      --border: #e4e7eb;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    /* Header / Nav */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .links a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 16px;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+    .links a:hover {
+      background: #f0f3f8;
+      color: var(--text);
+    }
+
+    /* Layout sections */
+    main {
+      max-width: 1000px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    /* Product grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: red
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+    .desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .price {
+      font-weight: 600;
+    }
+    .btn {
+      background: var(--accent);
+      color: red;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      width: fit-content;
+    }
+    .btn:hover { background: var(--accent-dark); }
+
+    /* Cart */
+    .cart {
+      margin-top: 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .cart h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+    }
+    .cart-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px;
+      border-top: 1px dashed var(--border);
+      padding-top: 8px;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-weight: 700;
+    }
+    .clear {
+      background: #eef2ff;
+      color: #2f3b86;
+      border: 1px solid #c8d1ff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .clear:hover { background: #dde3ff; }
+
+    /* Footer */
+    footer {
+      margin-top: 30px;
+      padding: 18px 20px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    /* Section titles */
+    section h2 {
+      margin: 0 0 12px;
+      font-size: 1.3rem;
+    }
+
+    /* Small helper label style */
+    .tag {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header>
+    <div class="nav">
+      <div class="brand">Healthy Life Medical Store</div>
+      <nav class="links">
+        <a href="#home">Home</a>
+        <a href="#medicines">Medicines</a>
+        <a href="#cart">Cart</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Home -->
+    <section id="home" aria-label="Home">
+      <h2>Welcome</h2>
+      <p class="tag">Browse essential medicines and add them to your cart. This is a Grade 9 Website Project (2025).</p>
+    </section>
+
+    <!-- Medicines -->
+    <section id="medicines" aria-label="Medicines">
+      <h2>Medicines</h2>
+
+      <div class="grid">
+        <!-- Product: Paracetamol -->
+        <article class="card" data-name="Paracetamol" data-price="70">
+          <h3>Paracetamol</h3>
+          <p class="desc">Fever & pain relief for Kids, Adults and Old people</p>
+          <div class="price">₹70</div>
+          <button class="btn add">Add to Cart</button>
+        </article>
+
+        <!-- Product: Cough Syrup -->
+        <article class="card" data-name="Cough Syrup" data-price="90">
+          <h3>Cough Syrup</h3>
+          <p class="desc">Relief from cough and Pain</p>
+          <div class="price">₹90</div>
+          <button class="btn add">Add to Cart</button>
+        </article>
+
+        <!-- Product: Vitamin Tablets -->
+        <article class="card" data-name="Vitamin Tablets" data-price="190">
+          <h3>Vitamin Tablets</h3>
+          <p class="desc">Boost immunity and Power</p>
+          <div class="price">₹190</div>
+          <button class="btn add">Add to Cart</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Cart -->
+    <section id="cart" aria-label="Cart">
+      <div class="cart">
+        <h2>Cart items</h2>
+        <ul id="cartList" class="cart-list" aria-live="polite">
+          <!-- Items will appear here -->
+        </ul>
+
+        <div class="total">
+          <span>Total Bill:</span>
+          <span id="total">₹0</span>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <button id="clearBtn" class="clear">Clear Cart</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Vivaan's Healthy Life Medical Store | 
+</footer>
+
+  <script>
+    // Simple cart logic (no backend, no persistence)
+    const cart = [];
+
+    const formatINR = (amount) => `₹${amount}`;
+
+    function renderCart() {
+      const list = document.getElementById('cartList');
+      const totalEl = document.getElementById('total');
+
+      list.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, idx) => {
+        total += item.price;
+
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <span>${item.name}</span>
+          <span>${formatINR(item.price)}</span>
+        `;
+        list.appendChild(li);
+      });
+
+      totalEl.textContent = formatINR(total);
+
+      if (cart.length === 0) {
+        const empty = document.createElement('li');
+        empty.style.listStyle = 'none';
+        empty.style.color = '#5f6b7a';
+        empty.textContent = 'Your cart is empty.';
+        list.appendChild(empty);
+      }
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      renderCart();
+    }
+
+    // Hook up "Add to Cart" buttons
+    document.querySelectorAll('.card .add').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.card');
+        const name = card.dataset.name;
+        const price = Number(card.dataset.price);
+        addToCart(name, price);
+      });
+    });
+
+    // Clear cart
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      cart.length = 0;
+      renderCart();
+    });
+
+    // Initial render
+    renderCart();
+  </script>
+</body>
+</html>
