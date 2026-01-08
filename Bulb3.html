@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Light ON / OFF Bulb</title>
+
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+        }
+
+        img {
+            width: 150px;
+        }
+
+        button {
+            width: 80px;
+            height: 40px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .on {
+            background-color: lightgreen;
+        }
+
+        .off {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>💡 Light ON / OFF Bulb</h2>
+
+    <!-- Bulb Image -->
+    <img id="bulb" src="https://images.pexels.com/photos/1616472/pexels-photo-1616472.jpeg?cs=srgb&dl=bulb-glass-item-light-bulb-1616472.jpg&fm=jpg">
+
+    <br><br>
+
+    <!-- Buttons -->
+    <button class="on" onclick="lightOn()">ON</button>
+    <button class="off" onclick="lightOff()">OFF</button>
+
+    <script>
+        function lightOn() {
+            document.getElementById("bulb").src =
+            "https://tse3.mm.bing.net/th/id/OIP.zHtYy800GhmmVF2UfkgymwHaJ4?rs=1&pid=ImgDetMain&o=7&rm=3";
+        }
+
+        function lightOff() {
+            document.getElementById("bulb").src =
+            "https://th.bing.com/th/id/OIP.G015oNqM6HUDEP_iA5IWwgAAAA?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3";
+        }
+    </script>
+
+</body>
+</html>
