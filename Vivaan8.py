@@ -1,0 +1,6 @@
+x = str("3+5" )
+y = int(3+2.1)
+z = float(3+2.1)
+print(x)
+print(y)
+print(z)
